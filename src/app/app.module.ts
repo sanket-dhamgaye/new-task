@@ -1,19 +1,24 @@
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { MDBBootstrapModule } from "angular-bootstrap-md";
-import { AppRoutingModule } from "./app-routing.module";
+// import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { HeaderComponent } from "./header/header.component";
 import { HttpClientModule } from "@angular/common/http";
-import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { TimeAgoPipe } from "./pipes/time-ago.pipe";
+import { LoaderComponent } from "./loader/loader.component";
+import { SearchPipe } from "./pipes/search.pipe";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, TimeAgoPipe],
+  declarations: [AppComponent, TimeAgoPipe, LoaderComponent, SearchPipe],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
+    // AppRoutingModule,
     MDBBootstrapModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

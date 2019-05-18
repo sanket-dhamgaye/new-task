@@ -6,3 +6,12 @@
 .text-grey {
   color: grey !important;
 }
+#loader {
+  width: 100%;
+  background-color: #343a40e3;
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  left: 0;
+  text-align: center;
+}

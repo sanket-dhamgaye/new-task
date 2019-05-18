@@ -1,27 +1,37 @@
 <mdb-navbar SideClass="navbar container navbar-expand-md navbar-light pb-0">
+  <a class="navbar-brand d-md-none">News</a>
   <links>
-    <a class="navbar-brand d-md-none">News</a>
+    <a class="navbar-brand d-none"></a>
     <ul class="navbar-nav mx-auto text-center text-md-left" id="menu">
-      <li class="nav-item nav-active">
-        <a class="nav-link" href="#" (click)="getLatest()">Latest</a>
+      <li class="nav-item" [ngClass]="{ 'nav-active': activeLink == 'latest' }">
+        <a class="nav-link" href="#" (click)="getLatest('latest')">Latest</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" [ngClass]="{ 'nav-active': activeLink == 'in' }">
         <a class="nav-link" href="#" (click)="getCountryNews('in')">India</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="getLatest()">World</a>
+      <li class="nav-item" [ngClass]="{ 'nav-active': activeLink == 'world' }">
+        <a class="nav-link" href="#" (click)="getLatest('world')">World</a>
       </li>
-      <li class="nav-item">
+      <li
+        class="nav-item"
+        [ngClass]="{ 'nav-active': activeLink == 'business' }"
+      >
         <a class="nav-link" href="#" (click)="getCategoryNews('business')"
           >Business</a
         >
       </li>
-      <li class="nav-item">
+      <li
+        class="nav-item"
+        [ngClass]="{ 'nav-active': activeLink == 'technology' }"
+      >
         <a class="nav-link" href="#" (click)="getCategoryNews('technology')"
           >Technology</a
         >
       </li>
-      <li class="nav-item">
+      <li
+        class="nav-item"
+        [ngClass]="{ 'nav-active': activeLink == 'entertainment' }"
+      >
         <a class="nav-link" href="#" (click)="getCategoryNews('entertainment')"
           >Entertainment</a
         >
@@ -29,35 +39,65 @@
     </ul>
   </links>
 </mdb-navbar>
-<div class="container mt-5">
-  <div class="card mb-3" *ngFor="let news of newsData; let i = index">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-9">
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <div class="md-form">
+        <i class="fas fa-search prefix"></i>
+        <input
+          mdbInput
+          type="text"
+          id="search"
+          class="form-control"
+          name="searchTxt"
+          [(ngModel)]="searchTxt"
+        />
+        <label for="search">Search</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div id="loader" [hidden]="loading">
+        <app-loader></app-loader>
+      </div>
+      <div
+        class="card mb-3"
+        *ngFor="let news of newsData | search: searchTxt; let i = index"
+        [@flyInOut]="'in'"
+      >
+        <div class="card-body">
           <div class="row">
-            <div class="col-12">
-              <h5>{{ news.title }}</h5>
-              <p class="small text-grey">
-                <span>{{ news.source.name }}</span
-                >&nbsp; <i class="fas fa-circle font-icon"></i>&nbsp;
-                <span>{{ news.publishedAt | timeAgo }}</span>
-              </p>
-              <p>
-                <i class="fas fa-circle desc-icon"></i>
-                {{ news.description }}
-              </p>
+            <div class="col-md-9 col-lg-10">
+              <div class="row">
+                <div class="col-12">
+                  <h5>{{ news.title }}</h5>
+                  <p class="small text-grey">
+                    <span>{{ news.source.name }}</span
+                    >&nbsp; <i class="fas fa-circle font-icon"></i>&nbsp;
+                    <span>{{ news.publishedAt | timeAgo }}</span>
+                  </p>
+                  <p>
+                    <i class="fas fa-circle desc-icon"></i>
+                    {{ news.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-lg-2">
+              <img src="{{ news.urlToImage }}" class="img-fluid rounded" />
             </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <img src="{{ news.urlToImage }}" class="img-fluid" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button class="btn btn-link px-0 text-indigo" (click)="modelShow(i)">
-            <i class="fas fa-newspaper"></i> View full coverage
-          </button>
+          <div class="row">
+            <div class="col">
+              <button
+                class="btn btn-link px-0 text-indigo"
+                (click)="modelShow(i)"
+              >
+                <i class="fas fa-newspaper"></i> View full coverage
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
